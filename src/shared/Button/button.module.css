@@ -1,0 +1,11 @@
+.btn {
+  display: inline-block;
+  padding: 15px 15px;
+  background-color: transparent;
+  cursor: pointer;
+  color: #000;
+  background-color: azure;
+  font-family: inherit;
+  border-radius: 5px;
+  font-size: 20px;
+}
