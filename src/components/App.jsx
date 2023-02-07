@@ -6,35 +6,39 @@ import SectionTitle from './SectionTitle/SectionTitle';
 import Container from './Container/Container';
 import Notification from './Notification/Notification';
 
-
 import 'index.css';
 
-const feedbackOptions = ['good', 'neutral', 'bad'];
-
 const App = () => {
-  const [feedbacks, SetFeedbacks] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  });
+  const [good, setGoodFeedbacks] = useState(0);
+  const [neutral, setNeutralFeedbacks] = useState(0);
+  const [bad, setBadFeedbacks] = useState(0);
 
-  const total = feedbacks.good + feedbacks.neutral + feedbacks.bad;
+  const feedbackOptions = ['good', 'neutral', 'bad'];
+  const total = good + neutral + bad;
+
+  const leaveFeedback = option => {
+    switch (option) {
+      case 'good':
+        setGoodFeedbacks(prevGood => prevGood + 1);
+        break;
+      case 'neutral':
+        setNeutralFeedbacks(prevNeutral => prevNeutral + 1);
+        break;
+      case 'bad':
+        setBadFeedbacks(prevBad => prevBad + 1);
+        break;
+      default:
+        throw new Error("There isn't such option");
+    }
+  };
 
   const countPositiveFeedbackPercentage = () => {
     if (!total) {
       return 0;
     }
-    const value = feedbacks.good;
+    const value = good;
     const result = ((value / total) * 100).toFixed(0);
     return Number(result);
-  };
-
-  const leaveFeedback = name => {
-    SetFeedbacks(prevState => {
-      const value = prevState[name];
-
-      return { ...prevState, [name]: value + 1 };
-    });
   };
 
   const positiveFeedbackPersent = countPositiveFeedbackPercentage('good');
@@ -53,9 +57,9 @@ const App = () => {
       {total !== 0 && (
         <SectionTitle title="Statistics">
           <Statistics
-            good={feedbacks.good}
-            neutral={feedbacks.neutral}
-            bad={feedbacks.bad}
+            good={good}
+            neutral={neutral}
+            bad={bad}
             total={total}
             positivePercentage={positiveFeedbackPersent}
           />
